@@ -16,24 +16,11 @@ class App extends React.Component {
   search (term) {
     console.log(`${term} was searched`);
     $.ajax({
-      url: '/repos',
+      url: 'localhost:1128/repos',
       type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({username: term}),
-      success: (data) => {
+      data: {username: term},
+      success: () => {
         console.log('AJAX post GOOD!');
-        $.ajax({
-          url: '/repos',
-          type: 'GET',
-          contentType: 'application/json',
-          data: JSON.stringify({username: term}),
-          success: (data) => {
-            this.setState({repos: data});
-          },
-          error: (err) => {
-            console.log('AJAX get FAILED: ', err);
-          }
-        });
       },
       error: (err) => {
         console.log('AJAX post FAILED: ', err);
