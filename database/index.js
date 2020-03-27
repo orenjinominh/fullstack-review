@@ -19,9 +19,6 @@ let save = (repos) => {
   // This function should save a repo or repos to
   // the MongoDB
 
-  // repos come to us as objects in an array
-  // we need to grab each value from each object on array in order to save values to db using schema
-
   // data coming in will be an array of repos, so we need to loop thru array of objects (repo) to save relevant info
 
   repos.forEach(repo => {
@@ -43,4 +40,18 @@ let save = (repos) => {
 }
 
 
+let find = (cb) => {
+  Repo.find({})
+    .limit(25)
+    .sort({stars: 'descending'})
+    .exec((err, res) => {
+      if (err) {
+        console.log('Error retrieving repos from db');
+      } else {
+        cb(res);
+      }
+    })
+}
+
 module.exports.save = save;
+module.exports.find = find;
