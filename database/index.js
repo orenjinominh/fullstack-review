@@ -43,7 +43,7 @@ let save = (repos) => {
 let find = (cb) => {
   Repo.find({})
     .limit(25)
-    .sort({stars: 'descending'})
+    .sort({stars: -1})
     .exec((err, res) => {
       if (err) {
         console.log('Error retrieving repos from db');
