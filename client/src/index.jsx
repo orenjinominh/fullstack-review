@@ -17,9 +17,9 @@ class App extends React.Component {
     this.setState = this.setState.bind(this);
   }
 
-  // componentDidMount() {
-  //   this.fetchRepos();
-  // }
+  componentDidMount() {
+    this.fetchRepos();
+  }
 
   fetchRepos() {
     $.ajax({
