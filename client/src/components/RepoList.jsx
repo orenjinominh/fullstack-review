@@ -17,6 +17,11 @@ class RepoList extends React.Component {
 
     })
 
+    // remove mongoDB keys
+    headers.shift();
+    headers.pop();
+    headers.pop();
+
     return headers.map((key, index) => {
       return <th key={index}>{key}</th>
     })
@@ -25,13 +30,13 @@ class RepoList extends React.Component {
 
   renderRepoData() {
     return this.props.repos.map((repo, index) => {
-      const {id, name, owner, stars} = repo;
+      const {name, owner, stars, id, url} = repo;
       return (
         <tr key = {id}>
-          <td>{id}</td>
-          <td>{name}</td>
+          <td><a href={url}>{name}</a></td>
           <td>{owner}</td>
           <td>{stars}</td>
+          <td>{id}</td>
         </tr>
       )
     })
@@ -40,7 +45,7 @@ class RepoList extends React.Component {
   render() {
     return (
       <div>
-        <h1> Here are the top 25 repos by star count.</h1>
+        <h4> Here are the top 25 repos by star count.</h4>
         <table>
           <tbody>
             <tr>{this.renderTableHeader()}</tr>
