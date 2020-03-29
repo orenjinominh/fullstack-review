@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RepoList from './components/RepoList.jsx';
-
+import axios from 'axios';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,7 +14,7 @@ class App extends React.Component {
 
     this.fetchRepos = this.fetchRepos.bind(this);
     this.search = this.search.bind(this);
-    this.setState = this.setState.bind(this);
+
   }
 
   componentDidMount() {
@@ -26,7 +26,6 @@ class App extends React.Component {
       url: '/repos',
       type: 'GET',
       success: (results) => {
-        console.log('AJAX get GOOD!');
         this.setState({repos: [...results]}, () => {
           console.log('state updated:', this.state.repos);
         });
@@ -39,6 +38,7 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
+
     $.ajax({
       url: '/repos',
       type: 'POST',

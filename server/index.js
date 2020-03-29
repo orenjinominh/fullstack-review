@@ -13,23 +13,39 @@ let app = express();
 app.use(express.static(__dirname + '/../client/dist'));
 app.use(bodyParser());
 
-app.post('/repos', function (req, res) {
+app.post('/repos', async function (req, res) {
   // TODO - your code here!
   // This route should take the github username provided
   // and get the repo information from the github API, then
   // save the repo information in the database
-  let username = req.body.username;
-  getReposByUsername(username, saveToDB);
 
-  res.status(201).end();
+  try {
+    let username = req.body.username;
+    let saved = await getReposByUsername(username, saveToDB);
+    res.status(201);
+    res.end();
+  } catch(err) {
+    console.log(err);
+  }
+
+
+
 });
 
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
-  fetchFromDB((results) => {
-    res.send(results);
-  });
+
+  try {
+    fetchFromDB((results) => {
+      res.status(200);
+      res.send(results);
+    });
+  } catch (err) {
+    console.log('Error getting repos from db: ', err);
+  }
+
+
 });
 
 let port = 1128;

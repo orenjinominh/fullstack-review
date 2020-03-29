@@ -1,8 +1,8 @@
 const request = require('request');
 const config = require('../config.js');
+const axios = require('axios');
 
-
-let getReposByUsername = (username, cb) => {
+let getReposByUsername = async (username, cb) => {
   // TODO - Use the request module to request repos for a specific
   // user from the github API
 
@@ -18,14 +18,26 @@ let getReposByUsername = (username, cb) => {
 
   };
 
-  request.get(options, (err, response, body) => {
-    if (err) {
-      console.log('Error getting repos by username', err);
-    } else {
-      // JSON.parse on array returns array
-      cb(JSON.parse(body));
-    }
-  });
+  try {
+    const res = await axios.get(options.url, options.headers);
+
+    var reposData;
+    for (var i = 0; i < res.data.length; i++) {
+
+      reposData = {
+        name: res.data[i].name,
+        owner: res.data[i].owner.login,
+        stars: res.data[i].stargazers_count,
+        id: res.data[i].id,
+        url: res.data[i].html_url
+      };
+
+      cb(reposData);
+    };
+  } catch (err) {
+    console.log('error getting repos from GIT API');
+  }
+
 }
 
 module.exports.getReposByUsername = getReposByUsername;

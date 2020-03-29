@@ -15,31 +15,19 @@ let repoSchema = mongoose.Schema({
 let Repo = mongoose.model('Repo', repoSchema);
 
 
-let save = (repos) => {
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
+let save = (reposData) => {
 
-  // data coming in will be an array of repos, so we need to loop thru array of objects (repo) to save relevant info
+  let newRepo = new Repo(reposData);
 
-  repos.forEach(repo => {
-    let newRepo = new Repo({
-      name: repo.name,
-      owner: repo.owner.login,
-      stars: repo.stargazers_count,
-      id: repo.id,
-      url: repo.html_url
-    });
-
-    newRepo.save((err, data) => {
-      if (err) {
-        console.log('Error saving repo into db: ', err);
-      } else {
-        console.log('Repo saved successfully into db.');
-      }
-    });
+  newRepo.save(err => {
+    if (err) {
+      console.log('Error saving repo into db: ', err);
+    } else {
+      console.log('Repo saved successfully into db.');
+    }
   });
 }
+
 
 
 let find = (cb) => {

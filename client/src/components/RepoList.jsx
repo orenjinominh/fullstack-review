@@ -17,7 +17,7 @@ class RepoList extends React.Component {
 
     })
 
-    // remove mongoDB keys
+    // remove mongoDB keys and url key on display
     headers.shift();
     headers.pop();
     headers.pop();
