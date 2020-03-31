@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -27,9 +29,6 @@ app.post('/repos', async function (req, res) {
   } catch(err) {
     console.log(err);
   }
-
-
-
 });
 
 app.get('/repos', function (req, res) {
@@ -44,11 +43,10 @@ app.get('/repos', function (req, res) {
   } catch (err) {
     console.log('Error getting repos from db: ', err);
   }
-
-
 });
 
-let port = 1128;
+// let port = 1128;
+const port = process.env.PORT || 1128;
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);

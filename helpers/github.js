@@ -12,7 +12,7 @@ let getReposByUsername = async (username, cb) => {
     url: `https://api.github.com/users/${username}/repos`,
     headers: {
       'User-Agent': 'request',
-      'Authorization': `token ${config.TOKEN}`,
+      'Authorization': `token ${process.env.TOKEN}`,
       'Accept': 'application/vnd.github.v3+json'
     },
 
